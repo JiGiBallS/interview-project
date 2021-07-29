@@ -12,20 +12,12 @@ namespace WpfTestSQL
     public class Brand : INotifyPropertyChanged
     {
         
-        private int brand_id;
         private string brand_name;
         private string brand_description;
         private byte[] brand_logo;
         [Key]
-        public int Brand_id
-        {
-            get { return brand_id; }
-            set
-            {
-                brand_id = value;
-                OnPropertyChanged("Brand_id");
-            }
-        }
+        public int Id { get; set; }
+       
 
         public string Brand_name
         {

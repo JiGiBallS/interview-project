@@ -11,22 +11,13 @@ namespace WpfTestSQL
 {
     public class Car : INotifyPropertyChanged
     {
-        private int car_id;
         private string car_name;
         private string car_fuel_type;
         private int car_price; 
         private int car_brand_id;
 
         [Key]
-        public int Car_id
-        {
-            get { return car_id; }
-            set
-            {
-                car_id = value;
-                OnPropertyChanged("Car_id");
-            }
-        }
+        public int Id { get; set; }
 
         public string Car_name
         {

@@ -41,7 +41,7 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 _myText = value;
-                Phones = Phones.Where(n => n.Brand_id.ToString().StartsWith(_myText) ||  n.Brand_name.ToString().StartsWith(_myText));
+                Phones = Phones.Where(n => n.Id.ToString().StartsWith(_myText) ||  n.Brand_name.ToString().StartsWith(_myText));
             }
         }
         public string MyText2
@@ -50,7 +50,7 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 _myText2 = value;
-                Cars = Cars.Where(n => n.Car_id.ToString().StartsWith(_myText2) || n.Car_name.ToString().StartsWith(_myText2));
+                Cars = Cars.Where(n => n.Id.ToString().StartsWith(_myText2) || n.Car_name.ToString().StartsWith(_myText2));
             }
         }
         public Brand SelectedPhone
@@ -111,9 +111,9 @@ namespace WpfTestSQL.ViewModels
            
             db = new ApplicationContext();
 
-            db.Brand.Load();
-            Phones = db.Brand.Local.ToBindingList();
-            
+            db.Brands.Load();
+            Phones = db.Brands.Local.ToBindingList();
+
             db.Cars.Load();
             Cars = db.Cars.Local.ToBindingList();
             this._carService = carService;
@@ -170,7 +170,7 @@ namespace WpfTestSQL.ViewModels
 
                       Brand vm = new Brand()
                       {
-                          Brand_id = phone.Brand_id,
+                          Id = phone.Id,
                           Brand_description = phone.Brand_description,
                           Brand_name = phone.Brand_name,
                           Brand_logo = phone.Brand_logo
@@ -180,7 +180,7 @@ namespace WpfTestSQL.ViewModels
                       if (phoneWindow.ShowDialog() == true)
                       {
                           // получаем измененный объект
-                          phone = db.Brand.Find(phoneWindow.Brand.Brand_id);
+                          phone = db.Brands.Find(phoneWindow.Brand.Id);
                           if (phone != null)
                           {
                               phone.Brand_description = phoneWindow.Brand.Brand_description;
@@ -208,7 +208,7 @@ namespace WpfTestSQL.ViewModels
 
                       Car vm = new Car()
                       {
-                          Car_id = car.Car_id,
+                          Id = car.Id,
                           Car_name = car.Car_name,
                           Car_price = car.Car_price,
                           Car_fuel_type = car.Car_fuel_type,
@@ -220,7 +220,7 @@ namespace WpfTestSQL.ViewModels
                       if (carWindow.ShowDialog() == true)
                       {
                           // получаем измененный объект
-                          car = db.Cars.Find(carWindow.Car.Car_id);
+                          car = db.Cars.Find(carWindow.Car.Id);
                           if (car != null)
                           {
                               car.Car_name = carWindow.Car.Car_name;
@@ -245,7 +245,7 @@ namespace WpfTestSQL.ViewModels
                       if (selectedItem == null) return;
                       // получаем выделенный объект
                       Brand phone = selectedItem as Brand;
-                      db.Brand.Remove(phone);
+                      db.Brands.Remove(phone);
                       db.SaveChanges();
                   }));
             }

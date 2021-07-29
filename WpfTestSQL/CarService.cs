@@ -10,7 +10,7 @@ namespace WpfTestSQL
     {
         public async Task Create(Brand phone, ApplicationContext db)
         {
-            db.Brand.Add(phone);
+            db.Brands.Add(phone);
             await db.SaveChangesAsync();
         }
     }
