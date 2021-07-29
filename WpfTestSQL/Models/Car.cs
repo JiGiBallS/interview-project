@@ -15,7 +15,10 @@ namespace WpfTestSQL
         private string car_fuel_type;
         private int car_price; 
         private int car_brand_id;
-
+        private string car_date_of_appearance;
+        private string car_class;
+        private int car_capacity;
+        private string car_in_stock;
         [Key]
         public int Id { get; set; }
 
@@ -55,7 +58,42 @@ namespace WpfTestSQL
                 OnPropertyChanged("Car_brand_id");
             }
         }
-
+        public string Car_date_of_appearance
+        {
+            get { return car_date_of_appearance; }
+            set
+            {
+                car_date_of_appearance = value;
+                OnPropertyChanged("Car_date_of_appearance");
+            }
+        }
+        public string Car_class
+        {
+            get { return car_class; }
+            set
+            {
+                car_class = value;
+                OnPropertyChanged("Car_class");
+            }
+        }
+        public int Car_capacity
+        {
+            get { return car_capacity; }
+            set
+            {
+                car_capacity = value;
+                OnPropertyChanged("Car_capacity");
+            }
+        }
+        public string Car_in_stock
+        {
+            get { return car_in_stock; }
+            set
+            {
+                car_in_stock = value;
+                OnPropertyChanged("Car_in_stock");
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

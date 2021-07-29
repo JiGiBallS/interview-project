@@ -18,13 +18,12 @@ using WpfTestSQL.ViewModels;
 namespace WpfTestSQL
 {
     /// <summary>
-    /// Логика взаимодействия для PhoneWindow.xaml
+    /// Логика взаимодействия для BrandWindow.xaml
     /// </summary>
-    public partial class PhoneWindow : Window
+    public partial class BrandWindow : Window
     {
         public Brand Brand { get; private set; }
-        public BitmapImage ImagePath;
-        public PhoneWindow(Brand p)
+        public BrandWindow(Brand p)
         {
             InitializeComponent();
             Brand = p;
@@ -42,12 +41,9 @@ namespace WpfTestSQL
             var dlg = new OpenFileDialog();
             if (dlg.ShowDialog() == true)
             {
-                //ImagePath = new BitmapImage(new Uri(dlg.FileName, UriKind.Absolute));
                 d = dlg.FileName;
             }
-            // string shortFileName = ImagePath.ToString().Substring(ImagePath.ToString().LastIndexOf('\\') + 1); // forest.jpg
 
-            // массив для хранения бинарных данных файла
             byte[] imageData;
             using (FileStream fs = new FileStream(d, FileMode.Open))
             {

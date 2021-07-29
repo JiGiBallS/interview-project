@@ -1,17 +1,10 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using WpfTestSQL.Services;
 
 namespace WpfTestSQL.ViewModels
 {
@@ -24,7 +17,8 @@ namespace WpfTestSQL.ViewModels
         RelayCommand editCarCommand;
         RelayCommand deleteCommand;
         RelayCommand deleteCarCommand;
-        IEnumerable<Brand> phones;
+        RelayCommand showAllCommand;
+        IEnumerable<Brand> brands;
         IEnumerable<Car> cars;
 
         private Brand selectedPhone;
@@ -34,6 +28,7 @@ namespace WpfTestSQL.ViewModels
         //поиск по авто
         private string _myText2;
         private readonly CarService _carService;
+        private readonly BrandService _brandService;
 
         public string MyText
         {
@@ -41,7 +36,7 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 _myText = value;
-                Phones = Phones.Where(n => n.Id.ToString().StartsWith(_myText) ||  n.Brand_name.ToString().StartsWith(_myText));
+                Brands = Brands.Where(n => n.Id.ToString().StartsWith(_myText) || n.Brand_name.ToString().StartsWith(_myText));
             }
         }
         public string MyText2
@@ -59,18 +54,18 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 selectedPhone = value;
-                //var suitableCars = Cars.Where(n => n.Car_brand_id == selectedPhone.Brand_id);
-                //if (suitableCars.Count() == 0)
-                //{
-                //    MessageBox.Show("Машин данного бренда нет!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    db.Cars.Load();
-                //    Cars = db.Cars.Local.ToBindingList();
-                //}
-                //else
-                //{
-                //    Cars = suitableCars;
-                //}
-                
+                var suitableCars = Cars.Where(n => n.Car_brand_id == selectedPhone.Id);
+                if (suitableCars.Count() == 0)
+                {
+                    MessageBox.Show("Машин данного бренда нет!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    db.Cars.Load();
+                    Cars = db.Cars.Local.ToBindingList();
+                }
+                else
+                {
+                    Cars = suitableCars;
+                }
+
                 OnPropertyChanged("SelectedPhone");
             }
         }
@@ -85,13 +80,13 @@ namespace WpfTestSQL.ViewModels
             }
         }
 
-        public IEnumerable<Brand> Phones
+        public IEnumerable<Brand> Brands
         {
-            get { return phones; }
+            get { return brands; }
             set
             {
-                phones = value;
-                OnPropertyChanged("Brand");
+                brands = value;
+                OnPropertyChanged("Brands");
             }
         }
 
@@ -105,19 +100,18 @@ namespace WpfTestSQL.ViewModels
             }
         }
 
-        public ApplicationViewModel(CarService carService)
+        public ApplicationViewModel(CarService carService, BrandService brandService)
         {
             _carService = carService;
-           
+            _brandService = brandService;
+
             db = new ApplicationContext();
 
-            db.Brands.Load();
-            Phones = db.Brands.Local.ToBindingList();
-
-            db.Cars.Load();
-            Cars = db.Cars.Local.ToBindingList();
+            Brands = _brandService.GetAll(db);
+            Cars = _carService.GetAll(db);
             this._carService = carService;
-            
+            this._brandService = brandService;
+
         }
 
         // команда добавления
@@ -128,13 +122,24 @@ namespace WpfTestSQL.ViewModels
                 return addCommand ??
                   (addCommand = new RelayCommand(async (o) =>
                   {
-                      PhoneWindow phoneWindow = new PhoneWindow(new Brand());
-                      if (phoneWindow.ShowDialog() == true)
+                      BrandWindow brandWindow = new BrandWindow(new Brand());
+                      if (brandWindow.ShowDialog() == true)
                       {
-                          Brand phone = phoneWindow.Brand;
-                          await _carService.Create(phone,db);
-
+                          Brand brand = brandWindow.Brand;
+                          await _brandService.Create(brand, db);
                       }
+                  }));
+            }
+        }
+
+        public RelayCommand ShowAllCommand
+        {
+            get
+            {
+                return showAllCommand ??
+                  (showAllCommand = new RelayCommand((o) =>
+                  {
+                      Cars = _carService.GetAll(db);
                   }));
             }
         }
@@ -144,14 +149,13 @@ namespace WpfTestSQL.ViewModels
             get
             {
                 return addCarCommand ??
-                  (addCarCommand = new RelayCommand((o) =>
+                  (addCarCommand = new RelayCommand(async (o) =>
                   {
                       CarWindow carWindow = new CarWindow(new Car());
                       if (carWindow.ShowDialog() == true)
                       {
                           Car car = carWindow.Car;
-                          db.Cars.Add(car);
-                          db.SaveChanges();
+                          await _carService.Create(car, db);
                       }
                   }));
             }
@@ -175,7 +179,7 @@ namespace WpfTestSQL.ViewModels
                           Brand_name = phone.Brand_name,
                           Brand_logo = phone.Brand_logo
                       };
-                      PhoneWindow phoneWindow = new PhoneWindow(vm);
+                      BrandWindow phoneWindow = new BrandWindow(vm);
 
                       if (phoneWindow.ShowDialog() == true)
                       {
@@ -200,7 +204,7 @@ namespace WpfTestSQL.ViewModels
             get
             {
                 return editCarCommand ??
-                  (editCarCommand = new RelayCommand((selectedItem) =>
+                  (editCarCommand = new RelayCommand(async (selectedItem) =>
                   {
                       if (selectedItem == null) return;
                       // получаем выделенный объект
@@ -213,6 +217,10 @@ namespace WpfTestSQL.ViewModels
                           Car_price = car.Car_price,
                           Car_fuel_type = car.Car_fuel_type,
                           Car_brand_id = car.Car_brand_id,
+                          Car_capacity = car.Car_capacity,
+                          Car_class = car.Car_class,
+                          Car_date_of_appearance = car.Car_date_of_appearance,
+                          Car_in_stock = car.Car_in_stock
                       };
                       CarWindow carWindow = new CarWindow(vm);
 
@@ -220,15 +228,18 @@ namespace WpfTestSQL.ViewModels
                       if (carWindow.ShowDialog() == true)
                       {
                           // получаем измененный объект
-                          car = db.Cars.Find(carWindow.Car.Id);
+                          car = await _carService.FindById(carWindow.Car.Id, db);
                           if (car != null)
                           {
                               car.Car_name = carWindow.Car.Car_name;
                               car.Car_price = carWindow.Car.Car_price;
                               car.Car_fuel_type = carWindow.Car.Car_fuel_type;
                               car.Car_brand_id = carWindow.Car.Car_brand_id;
-                              db.Entry(car).State = EntityState.Modified;
-                              db.SaveChanges();
+                              car.Car_capacity = carWindow.Car.Car_capacity; 
+                              car.Car_class = carWindow.Car.Car_class;
+                              car.Car_date_of_appearance = carWindow.Car.Car_date_of_appearance;
+                              car.Car_in_stock = carWindow.Car.Car_in_stock;
+                              await _carService.Update(car, db);
                           }
                       }
                   }));
@@ -240,13 +251,11 @@ namespace WpfTestSQL.ViewModels
             get
             {
                 return deleteCommand ??
-                  (deleteCommand = new RelayCommand((selectedItem) =>
+                  (deleteCommand = new RelayCommand(async(selectedItem) =>
                   {
                       if (selectedItem == null) return;
-                      // получаем выделенный объект
-                      Brand phone = selectedItem as Brand;
-                      db.Brands.Remove(phone);
-                      db.SaveChanges();
+                      Brand brand = selectedItem as Brand;
+                      await _brandService.Delete(brand, db);
                   }));
             }
         }
@@ -256,13 +265,12 @@ namespace WpfTestSQL.ViewModels
             get
             {
                 return deleteCarCommand ??
-                  (deleteCarCommand = new RelayCommand((selectedItem) =>
+                  (deleteCarCommand = new RelayCommand(async (selectedItem) =>
                   {
                       if (selectedItem == null) return;
-                      // получаем выделенный объект
+
                       Car car = selectedItem as Car;
-                      db.Cars.Remove(car);
-                      db.SaveChanges();
+                      await _carService.Delete(car, db);
                   }));
             }
         }

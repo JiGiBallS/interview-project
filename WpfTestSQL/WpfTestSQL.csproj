@@ -107,9 +107,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationContext.cs" />
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="CarService.cs" />
-    <Compile Include="ICarService.cs" />
+    <Compile Include="Services\BrandService.cs" />
+    <Compile Include="Services\CarService.cs" />
+    <Compile Include="Interfaces\ICarService.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
@@ -122,7 +122,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PhoneWindow.xaml">
+    <Page Include="Views\BrandWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,8 +132,8 @@
     <Compile Include="Views\CarWindow.xaml.cs">
       <DependentUpon>CarWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PhoneWindow.xaml.cs">
-      <DependentUpon>PhoneWindow.xaml</DependentUpon>
+    <Compile Include="Views\BrandWindow.xaml.cs">
+      <DependentUpon>BrandWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -152,7 +152,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="cars.db" />
     <None Include="mobiles.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

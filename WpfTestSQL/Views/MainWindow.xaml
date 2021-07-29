@@ -20,12 +20,12 @@
         </Grid.RowDefinitions>
         <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding MyText,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding MyText2,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <ListBox x:Name="phonesList" Grid.Row="1" ItemsSource="{Binding Phones}"
+        <ListBox x:Name="phonesList" Grid.Row="1" ItemsSource="{Binding Brands}"
             SelectedItem="{Binding SelectedPhone}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Brand_id}" FontSize="16" />
+                        <TextBlock Text="{Binding Id}" FontSize="16" />
                         <TextBlock Text="{Binding Brand_name}" FontSize="16" />
                         <TextBlock Text="{Binding Brand_description}" FontSize="12" />
                         <Image Source="{Binding Brand_logo}" Stretch="Fill" Height="80"></Image>
@@ -39,19 +39,22 @@
                     CommandParameter="{Binding ElementName=phonesList, Path=SelectedItem}"  />
             <Button Content="Удалить" Margin="10" Command="{Binding DeleteCommand}"
                     CommandParameter="{Binding ElementName=phonesList, Path=SelectedItem}"  />
+            
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Добавить" Margin="10" Command="{Binding AddCarCommand}"  />
-            <Button Content="Изменить" Margin="10" Command="{Binding EditCarCommand}"
+            <Button Content="Добавить" Margin="5" Command="{Binding AddCarCommand}"  />
+            
+            <Button Content="Изменить" Margin="5" Command="{Binding EditCarCommand}"
                     CommandParameter="{Binding ElementName=carsList, Path=SelectedItem}"  />
-            <Button Content="Удалить" Margin="10" Command="{Binding DeleteCarCommand}"
+            <Button Content="Удалить" Margin="5" Command="{Binding DeleteCarCommand}"
                     CommandParameter="{Binding ElementName=carsList, Path=SelectedItem}"  />
+            <Button Content="Все" Margin="5" Command="{Binding ShowAllCommand}"  />
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" DataContext="{Binding SelectedCar}">
             <TextBlock Text="Выбранный элемент"  />
             <TextBlock Text="№" />
             <TextBox Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Модель" />
+            <TextBlock Text="Название" />
             <TextBox Text="{Binding Car_name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Производитель" />
             <TextBox Text="{Binding Car_brand_id, UpdateSourceTrigger=PropertyChanged}" />
@@ -59,15 +62,23 @@
             <TextBox Text="{Binding Car_price, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Тип топлива" />
             <TextBox Text="{Binding Car_fuel_type, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Вместимость" />
+            <TextBox Text="{Binding Car_capacity, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Класс" />
+            <TextBox Text="{Binding Car_class, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="В наличии" />
+            <TextBox Text="{Binding Car_in_stock, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Дата появления на рынке" />
+            <TextBox Text="{Binding Car_date_of_appearance, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <ListBox Grid.Column="1" Grid.Row="1" x:Name="carsList" ItemsSource="{Binding Cars}"
             SelectedItem="{Binding SelectedCar}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Id}" FontSize="16" />
+                        <TextBlock Text="{Binding Id}" FontSize="12" />
                         <TextBlock Text="{Binding Car_name}" FontSize="12" />
-                        <TextBlock Text="{Binding Car_price}" FontSize="13" />
+                        <TextBlock Text="{Binding Car_price}" FontSize="10" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

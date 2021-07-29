@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace WpfTestSQL
 {
     /// <summary>
-    /// Логика взаимодействия для PhoneWindow.xaml
+    /// Логика взаимодействия для BrandWindow.xaml
     /// </summary>
     public partial class CarWindow : Window
     {
@@ -31,6 +31,12 @@ namespace WpfTestSQL
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+        }
+        private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {            
+            DateTime? selectedDate = calendar1.SelectedDate;
+
+            MessageBox.Show(selectedDate.Value.Date.ToShortDateString());
         }
     }
 }

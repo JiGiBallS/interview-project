@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using WpfTestSQL.Services;
 using WpfTestSQL.ViewModels;
 
 namespace WpfTestSQL
@@ -12,6 +13,7 @@ namespace WpfTestSQL
             var services = new ServiceCollection();
             services.AddScoped<ApplicationViewModel>();
             services.AddScoped<CarService>();
+            services.AddScoped<BrandService>();
             _provider = services.BuildServiceProvider();
         }
 
