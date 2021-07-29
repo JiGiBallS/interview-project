@@ -48,7 +48,7 @@
                     CommandParameter="{Binding ElementName=carsList, Path=SelectedItem}"  />
             <Button Content="Удалить" Margin="5" Command="{Binding DeleteCarCommand}"
                     CommandParameter="{Binding ElementName=carsList, Path=SelectedItem}"  />
-            <Button Content="Все" Margin="5" Command="{Binding ShowAllCommand}"  />
+            <Button Content="Все" Margin="5" Command="{Binding ShowAllCarCommand}"  />
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.Row="1" DataContext="{Binding SelectedCar}">
             <TextBlock Text="Выбранный элемент"  />
@@ -77,7 +77,7 @@
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding Id}" FontSize="12" />
-                        <TextBlock Text="{Binding Car_name}" FontSize="12" />
+                        <TextBlock Text="{Binding Car_name}" FontSize="20" />
                         <TextBlock Text="{Binding Car_price}" FontSize="10" />
                     </StackPanel>
                 </DataTemplate>

@@ -42,17 +42,28 @@
 
         <TextBox Text="{Binding Car_name}" Grid.Column="1" />
         <TextBox Text="{Binding Car_brand_id}" Grid.Column="1" Grid.Row="1" />
-        <TextBox Text="{Binding Car_fuel_type}" Grid.Column="1" Grid.Row="2" />
+        <ComboBox Grid.Column="1" Grid.Row="2" Margin="8" SelectedItem="{Binding Path=Car_fuel_type}">
+            <ComboBoxItem>Бензин</ComboBoxItem>
+            <ComboBoxItem>Газ</ComboBoxItem>
+            <ComboBoxItem>Электроэнергия</ComboBoxItem>
+        </ComboBox>
+
         <TextBox Text="{Binding Car_price}" Grid.Column="1" Grid.Row="3" />
         <TextBox Text="{Binding Car_class}" Grid.Column="1" Grid.Row="4" />
         <TextBox Text="{Binding Car_capacity}" Grid.Column="1" Grid.Row="5" />
-        <TextBox Text="{Binding Car_class}" Grid.Column="1" Grid.Row="6" />
-        <Calendar x:Name="calendar1" Grid.Column="2" Grid.Row="3" Grid.RowSpan="3" FirstDayOfWeek="Monday"
-        SelectedDatesChanged="calendar_SelectedDatesChanged">
-            <Calendar.BlackoutDates>
-                <CalendarDateRange Start="11/01/1950" End="11/01/2025"></CalendarDateRange>
-            </Calendar.BlackoutDates>
-        </Calendar>
+        <ComboBox Grid.Column="1" Grid.Row="4" Margin="8" SelectedItem="{Binding Path=Car_class}">
+            <ComboBoxItem>A</ComboBoxItem>
+            <ComboBoxItem>B</ComboBoxItem>
+            <ComboBoxItem>C</ComboBoxItem>
+            <ComboBoxItem>D</ComboBoxItem>
+            <ComboBoxItem>E</ComboBoxItem>
+            <ComboBoxItem>F</ComboBoxItem>
+        </ComboBox>
+        <ComboBox Grid.Column="1" Grid.Row="6" Margin="8" SelectedItem="{Binding Path=Car_in_stock}">
+            <ComboBoxItem>В наличии</ComboBoxItem>
+            <ComboBoxItem>Нет на складе</ComboBoxItem>
+        </ComboBox>
+        <DatePicker Grid.Row="3" Grid.Column="3" Name="datePicker1" IsDropDownOpen="True" SelectedDateFormat="Short" SelectedDate="{Binding Path=Car_date_of_appearance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="7" Grid.Column="1">
             <Button IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="5">OK</Button>

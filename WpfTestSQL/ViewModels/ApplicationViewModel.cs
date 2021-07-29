@@ -17,7 +17,7 @@ namespace WpfTestSQL.ViewModels
         RelayCommand editCarCommand;
         RelayCommand deleteCommand;
         RelayCommand deleteCarCommand;
-        RelayCommand showAllCommand;
+        RelayCommand showAllCarCommand;
         IEnumerable<Brand> brands;
         IEnumerable<Car> cars;
 
@@ -54,18 +54,20 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 selectedPhone = value;
-                var suitableCars = Cars.Where(n => n.Car_brand_id == selectedPhone.Id);
-                if (suitableCars.Count() == 0)
+                if (selectedPhone != null)
                 {
-                    MessageBox.Show("Машин данного бренда нет!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
-                    db.Cars.Load();
-                    Cars = db.Cars.Local.ToBindingList();
+                    var suitableCars = Cars.Where(n => n.Car_brand_id == selectedPhone.Id);
+                    if (suitableCars.Count() == 0)
+                    {
+                        MessageBox.Show("Машин данного бренда нет!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        db.Cars.Load();
+                        Cars = db.Cars.Local.ToBindingList();
+                    }
+                    else
+                    {
+                        Cars = suitableCars;
+                    }
                 }
-                else
-                {
-                    Cars = suitableCars;
-                }
-
                 OnPropertyChanged("SelectedPhone");
             }
         }
@@ -132,12 +134,12 @@ namespace WpfTestSQL.ViewModels
             }
         }
 
-        public RelayCommand ShowAllCommand
+        public RelayCommand ShowAllCarCommand
         {
             get
             {
-                return showAllCommand ??
-                  (showAllCommand = new RelayCommand((o) =>
+                return showAllCarCommand ??
+                  (showAllCarCommand = new RelayCommand((o) =>
                   {
                       Cars = _carService.GetAll(db);
                   }));
@@ -155,6 +157,14 @@ namespace WpfTestSQL.ViewModels
                       if (carWindow.ShowDialog() == true)
                       {
                           Car car = carWindow.Car;
+                          car.Car_name = carWindow.Car.Car_name;
+                          car.Car_price = carWindow.Car.Car_price;
+                          car.Car_fuel_type = carWindow.Car.Car_fuel_type.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+                          car.Car_brand_id = carWindow.Car.Car_brand_id;
+                          car.Car_capacity = carWindow.Car.Car_capacity;
+                          car.Car_class = carWindow.Car.Car_class.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+                          car.Car_date_of_appearance = carWindow.Car.Car_date_of_appearance;
+                          car.Car_in_stock = carWindow.Car.Car_in_stock.Replace("System.Windows.Controls.ComboBoxItem: ", "");
                           await _carService.Create(car, db);
                       }
                   }));
@@ -233,12 +243,12 @@ namespace WpfTestSQL.ViewModels
                           {
                               car.Car_name = carWindow.Car.Car_name;
                               car.Car_price = carWindow.Car.Car_price;
-                              car.Car_fuel_type = carWindow.Car.Car_fuel_type;
+                              car.Car_fuel_type = carWindow.Car.Car_fuel_type.Replace("System.Windows.Controls.ComboBoxItem: ", "");
                               car.Car_brand_id = carWindow.Car.Car_brand_id;
                               car.Car_capacity = carWindow.Car.Car_capacity; 
-                              car.Car_class = carWindow.Car.Car_class;
+                              car.Car_class = carWindow.Car.Car_class.Replace("System.Windows.Controls.ComboBoxItem: ", "");
                               car.Car_date_of_appearance = carWindow.Car.Car_date_of_appearance;
-                              car.Car_in_stock = carWindow.Car.Car_in_stock;
+                              car.Car_in_stock = carWindow.Car.Car_in_stock.Replace("System.Windows.Controls.ComboBoxItem: ", "");
                               await _carService.Update(car, db);
                           }
                       }
