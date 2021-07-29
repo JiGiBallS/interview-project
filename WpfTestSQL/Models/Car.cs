@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,12 +11,22 @@ namespace WpfTestSQL
 {
     public class Car : INotifyPropertyChanged
     {
+        private int car_id;
         private string car_name;
         private string car_fuel_type;
         private int car_price; 
         private int car_brand_id;
 
-        public int Id { get; set; }
+        [Key]
+        public int Car_id
+        {
+            get { return car_id; }
+            set
+            {
+                car_id = value;
+                OnPropertyChanged("Car_id");
+            }
+        }
 
         public string Car_name
         {

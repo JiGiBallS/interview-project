@@ -106,36 +106,7 @@
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="BaseRepository.cs" />
     <Compile Include="CarService.cs" />
-    <Compile Include="ICarService.cs" />
-    <Compile Include="Migrations\202107261209019_InitialCreate.cs" />
-    <Compile Include="Migrations\202107261209019_InitialCreate.designer.cs">
-      <DependentUpon>202107261209019_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107261425597_AddCompanyMigration.cs" />
-    <Compile Include="Migrations\202107261425597_AddCompanyMigration.designer.cs">
-      <DependentUpon>202107261425597_AddCompanyMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107271219164_AddLogoMigration.cs" />
-    <Compile Include="Migrations\202107271219164_AddLogoMigration.designer.cs">
-      <DependentUpon>202107271219164_AddLogoMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107281133466_AddBrandMigration.cs" />
-    <Compile Include="Migrations\202107281133466_AddBrandMigration.designer.cs">
-      <DependentUpon>202107281133466_AddBrandMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107281144044_AddBrand2Migration.cs" />
-    <Compile Include="Migrations\202107281144044_AddBrand2Migration.designer.cs">
-      <DependentUpon>202107281144044_AddBrand2Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107281150020_AddBrand3Migration.cs" />
-    <Compile Include="Migrations\202107281150020_AddBrand3Migration.designer.cs">
-      <DependentUpon>202107281150020_AddBrand3Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107282017467_AddBrand4Migration.cs" />
-    <Compile Include="Migrations\202107282017467_AddBrand4Migration.designer.cs">
-      <DependentUpon>202107282017467_AddBrand4Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Interfaces\ICarService.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
@@ -174,34 +145,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202107261209019_InitialCreate.resx">
-      <DependentUpon>202107261209019_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107261425597_AddCompanyMigration.resx">
-      <DependentUpon>202107261425597_AddCompanyMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107271219164_AddLogoMigration.resx">
-      <DependentUpon>202107271219164_AddLogoMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107281133466_AddBrandMigration.resx">
-      <DependentUpon>202107281133466_AddBrandMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107281144044_AddBrand2Migration.resx">
-      <DependentUpon>202107281144044_AddBrand2Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107281150020_AddBrand3Migration.resx">
-      <DependentUpon>202107281150020_AddBrand3Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107282017467_AddBrand4Migration.resx">
-      <DependentUpon>202107282017467_AddBrand4Migration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="mobiles.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -210,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

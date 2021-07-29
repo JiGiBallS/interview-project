@@ -13,7 +13,7 @@ namespace WpfTestSQL
         public ApplicationContext() : base("DefaultConnection")
         {
         }
-        public DbSet<Brand> Phones { get; set; }
+        public DbSet<Brand> Brand { get; set; }
 
         public DbSet<Car> Cars { get; set; }
     }

@@ -50,7 +50,7 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 _myText2 = value;
-                Cars = Cars.Where(n => n.Id.ToString().StartsWith(_myText2) || n.Car_name.ToString().StartsWith(_myText2));
+                Cars = Cars.Where(n => n.Car_id.ToString().StartsWith(_myText2) || n.Car_name.ToString().StartsWith(_myText2));
             }
         }
         public Brand SelectedPhone
@@ -91,7 +91,7 @@ namespace WpfTestSQL.ViewModels
             set
             {
                 phones = value;
-                OnPropertyChanged("Phones");
+                OnPropertyChanged("Brand");
             }
         }
 
@@ -111,12 +111,13 @@ namespace WpfTestSQL.ViewModels
            
             db = new ApplicationContext();
 
-            db.Phones.Load();
-            Phones = db.Phones.Local.ToBindingList();
+            db.Brand.Load();
+            Phones = db.Brand.Local.ToBindingList();
             
             db.Cars.Load();
             Cars = db.Cars.Local.ToBindingList();
             this._carService = carService;
+            
         }
 
         // команда добавления
@@ -179,7 +180,7 @@ namespace WpfTestSQL.ViewModels
                       if (phoneWindow.ShowDialog() == true)
                       {
                           // получаем измененный объект
-                          phone = db.Phones.Find(phoneWindow.Brand.Brand_id);
+                          phone = db.Brand.Find(phoneWindow.Brand.Brand_id);
                           if (phone != null)
                           {
                               phone.Brand_description = phoneWindow.Brand.Brand_description;
@@ -207,7 +208,7 @@ namespace WpfTestSQL.ViewModels
 
                       Car vm = new Car()
                       {
-                          Id = car.Id,
+                          Car_id = car.Car_id,
                           Car_name = car.Car_name,
                           Car_price = car.Car_price,
                           Car_fuel_type = car.Car_fuel_type,
@@ -219,7 +220,7 @@ namespace WpfTestSQL.ViewModels
                       if (carWindow.ShowDialog() == true)
                       {
                           // получаем измененный объект
-                          car = db.Cars.Find(carWindow.Car.Id);
+                          car = db.Cars.Find(carWindow.Car.Car_id);
                           if (car != null)
                           {
                               car.Car_name = carWindow.Car.Car_name;
@@ -244,7 +245,7 @@ namespace WpfTestSQL.ViewModels
                       if (selectedItem == null) return;
                       // получаем выделенный объект
                       Brand phone = selectedItem as Brand;
-                      db.Phones.Remove(phone);
+                      db.Brand.Remove(phone);
                       db.SaveChanges();
                   }));
             }
