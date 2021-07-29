@@ -32,5 +32,6 @@ namespace WpfTestSQL
         {
             this.DialogResult = true;
         }
+
     }
 }

@@ -27,8 +27,8 @@
                     <StackPanel>
                         <TextBlock Text="{Binding Id}" FontSize="16" />
                         <TextBlock Text="{Binding Brand_name}" FontSize="16" />
-                        <TextBlock Text="{Binding Brand_description}" FontSize="12" />
-                        <Image Source="{Binding Brand_logo}" Stretch="Fill" Height="80"></Image>
+                        <TextBlock Text="{Binding Brand_description}" FontSize="12" MaxWidth="250" TextWrapping="Wrap"/>
+                        <Image Source="{Binding Brand_logo}" Height="80"></Image>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -57,7 +57,7 @@
             <TextBlock Text="Название" />
             <TextBox Text="{Binding Car_name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Производитель" />
-            <TextBox Text="{Binding Car_brand_id, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Text="{Binding Brand_id, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Цена" />
             <TextBox Text="{Binding Car_price, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Тип топлива" />

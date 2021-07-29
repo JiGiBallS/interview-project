@@ -46,6 +46,13 @@ namespace WpfTestSQL
                 OnPropertyChanged("Brand_logo");
             }
         }
+
+        public ICollection<Car> Cars { get; set; }
+        public Brand()
+        {
+            Cars = new List<Car>();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

@@ -56,7 +56,7 @@ namespace WpfTestSQL.ViewModels
                 selectedPhone = value;
                 if (selectedPhone != null)
                 {
-                    var suitableCars = Cars.Where(n => n.Car_brand_id == selectedPhone.Id);
+                    var suitableCars = Cars.Where(n => n.Brand_id == selectedPhone.Id);
                     if (suitableCars.Count() == 0)
                     {
                         MessageBox.Show("Машин данного бренда нет!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -160,7 +160,7 @@ namespace WpfTestSQL.ViewModels
                           car.Car_name = carWindow.Car.Car_name;
                           car.Car_price = carWindow.Car.Car_price;
                           car.Car_fuel_type = carWindow.Car.Car_fuel_type.Replace("System.Windows.Controls.ComboBoxItem: ", "");
-                          car.Car_brand_id = carWindow.Car.Car_brand_id;
+                          car.Brand_id = carWindow.Car.Brand_id;
                           car.Car_capacity = carWindow.Car.Car_capacity;
                           car.Car_class = carWindow.Car.Car_class.Replace("System.Windows.Controls.ComboBoxItem: ", "");
                           car.Car_date_of_appearance = carWindow.Car.Car_date_of_appearance;
@@ -226,7 +226,7 @@ namespace WpfTestSQL.ViewModels
                           Car_name = car.Car_name,
                           Car_price = car.Car_price,
                           Car_fuel_type = car.Car_fuel_type,
-                          Car_brand_id = car.Car_brand_id,
+                          Brand_id = car.Brand_id,
                           Car_capacity = car.Car_capacity,
                           Car_class = car.Car_class,
                           Car_date_of_appearance = car.Car_date_of_appearance,
@@ -244,7 +244,7 @@ namespace WpfTestSQL.ViewModels
                               car.Car_name = carWindow.Car.Car_name;
                               car.Car_price = carWindow.Car.Car_price;
                               car.Car_fuel_type = carWindow.Car.Car_fuel_type.Replace("System.Windows.Controls.ComboBoxItem: ", "");
-                              car.Car_brand_id = carWindow.Car.Car_brand_id;
+                              car.Brand_id = carWindow.Car.Brand_id;
                               car.Car_capacity = carWindow.Car.Car_capacity; 
                               car.Car_class = carWindow.Car.Car_class.Replace("System.Windows.Controls.ComboBoxItem: ", "");
                               car.Car_date_of_appearance = carWindow.Car.Car_date_of_appearance;
